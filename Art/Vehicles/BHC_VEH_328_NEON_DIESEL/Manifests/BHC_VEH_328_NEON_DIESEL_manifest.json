@@ -1,0 +1,98 @@
+{
+  "Project": "BIG HEAD CASINO GAMES",
+  "MandatoryInstruction": "create it fully 3D and very high end no BS.",
+  "Assets": [
+    {
+      "AssetID": "BHC_VEH_328_NEON_DIESEL",
+      "SourceFile": "Art/Vehicles/BHC_VEH_328_NEON_DIESEL/Blender/BHC_VEH_328_NEON_DIESEL_Master.blend",
+      "ExportFiles": [
+        "Art/Vehicles/BHC_VEH_328_NEON_DIESEL/Exports/BHC_VEH_328_NEON_DIESEL.glb",
+        "Art/Vehicles/BHC_VEH_328_NEON_DIESEL/Exports/BHC_VEH_328_NEON_DIESEL.fbx"
+      ],
+      "AssetType": "Vehicle source",
+      "DimensionsMeters": "5.05 L x 2.06 W x 2.10 max with wing",
+      "TriangleCounts": {
+        "LOD0": 83400,
+        "LOD1": "guidance ~60% shell",
+        "LOD2": "guidance ~25% shell"
+      },
+      "MaterialSlots": [
+        "M_BHC_328_Black",
+        "M_BHC_328_BrakeCaliper",
+        "M_BHC_328_BrakeDisc",
+        "M_BHC_328_CarbonFiber",
+        "M_BHC_328_Chrome",
+        "M_BHC_328_CoolWhite",
+        "M_BHC_328_EngineMetal",
+        "M_BHC_328_GraphiteHighlight",
+        "M_BHC_328_GraphitePaint",
+        "M_BHC_328_Hose",
+        "M_BHC_328_InteriorLeather",
+        "M_BHC_328_InteriorPlastic",
+        "M_BHC_328_InteriorRedAccent",
+        "M_BHC_328_Logo_RedFace",
+        "M_BHC_328_RedLamp",
+        "M_BHC_328_SmokedGlass",
+        "M_BHC_328_Tire",
+        "M_BHC_328_Wheel"
+      ],
+      "TextureFiles": "Procedural source materials in .blend; no external paths",
+      "SkeletonHierarchy": [
+        "Chassis",
+        "Wheel_FL",
+        "Wheel_FR",
+        "Wheel_RL",
+        "Wheel_RR",
+        "Door_FL",
+        "Door_FR",
+        "Door_RL",
+        "Door_RR",
+        "Hood",
+        "Trunk",
+        "SteeringWheel"
+      ],
+      "AnimationClips": [
+        "AN_BHC_328_Door_FL_Open",
+        "AN_BHC_328_Door_FR_Open",
+        "AN_BHC_328_Door_RL_Open",
+        "AN_BHC_328_Door_RR_Open",
+        "AN_BHC_328_Hood_Open",
+        "AN_BHC_328_Steering_90deg",
+        "AN_BHC_328_Trunk_Open"
+      ],
+      "Locators": [
+        "DriverSeat",
+        "FrontPassengerSeat",
+        "RearLeftPassengerSeat",
+        "RearRightPassengerSeat",
+        "DriverEntry",
+        "PassengerEntry",
+        "DriverCamera",
+        "PassengerCamera",
+        "ChaseCamera",
+        "EngineAudio",
+        "TurboAudio",
+        "Headlights",
+        "BrakeLights",
+        "ReverseLights",
+        "TurnSignals",
+        "RecoveryTow",
+        "Exhaust_L",
+        "Exhaust_R"
+      ],
+      "WheelDimensions": {
+        "RadiusMeters": 0.36,
+        "WidthMeters": 0.28,
+        "SpinAxis": "Y",
+        "FrontSteerAxis": "Z"
+      },
+      "CollisionComponents": "COL_BHC_328_Chassis and four COL_BHC_328_Wheel_* proxies",
+      "CollisionFile": "Art/Vehicles/BHC_VEH_328_NEON_DIESEL/Collision/COL_BHC_328_Vehicle.fbx",
+      "Dependencies": "Sol vehicle pawn, Unreal import scale 1.0",
+      "InferredDesignDecisions": "Concept board does not provide calibrated measurements; hidden geometry, cabin, engine bay and underbody inferred to preserve the approved silhouette. Fictional diesel/350 PSI identity is presentation-only.",
+      "KnownIssues": "LOD1/LOD2 are silhouette guidance meshes and require Sol profiling; Unreal drivable/networked acceptance remains untested.",
+      "VerificationStatus": "Blender source reopened, exports written, four-angle and detail previews rendered"
+    }
+  ],
+  "ImportContract": "Forward +X, Up +Z, lateral +Y, units meters, import scale 1.0"
+}

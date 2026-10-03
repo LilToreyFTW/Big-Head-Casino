@@ -15,7 +15,7 @@ const readBody = req => new Promise((resolve, reject) => { let text = ''; req.on
 
 module.exports = async (req, res) => {
   try {
-    if (req.method === 'GET' && (req.url === '/' || req.url === '/index.html')) return send(res, 200, fs.readFileSync(path.join(process.cwd(), 'web/index.html'), 'utf8'), 'text/html; charset=utf-8');
+    if (req.method === 'GET' && (req.url === '/' || req.url === '/index.html')) return send(res, 200, fs.readFileSync(path.join(process.cwd(), 'index.html'), 'utf8'), 'text/html; charset=utf-8');
     if (req.method === 'GET' && req.url === '/api/config') return send(res, 200, { lobby: { maxPlayers: 100, maxCrewSize: 4 }, vehicle: { assetId: 'BHC_VEH_CREW_VAN', seats: 4 }, destinations: destinations.map(([id, name, playable]) => ({ id, name, playable })) });
     if (req.method !== 'POST') return send(res, 404, { error: 'not found' });
     const body = await readBody(req);
