@@ -1,0 +1,19 @@
+{
+  "version": "restaurants_v1",
+  "restaurants": {
+    "BHC_REST_63RD_CHOPHOUSE": {
+      "name": "63RD STREET CHOPHOUSE",
+      "address": "15 63rd Street",
+      "menuVersion": "63RD_CHOPHOUSE_v1",
+      "items": [
+        ["Loaded Potato Skins", 15, "starter"], ["Crispy Onion Rings", 12, "starter"],
+        ["63rd Street Sirloin", 65, "main"], ["Chophouse Ribeye", 85, "main"],
+        ["Steakhouse Burger", 38, "main"], ["Smoky Vegetable Skillet", 34, "main"],
+        ["Mac and Cheese", 12, "side"], ["Garlic Mashed Potatoes", 11, "side"],
+        ["Brownie Sundae", 17, "dessert"], ["Apple Crumble", 16, "dessert"],
+        ["House Lemonade", 7, "drink"], ["Cola", 6, "drink"]
+      ],
+      "tables": { "Table_01": 2, "Table_02": 2, "Table_03": 4, "Table_04": 4 }
+    }
+  }
+}

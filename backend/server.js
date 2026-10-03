@@ -12,6 +12,7 @@ const server = http.createServer(async (req, res) => {
   try {
     if (req.method === 'GET' && req.url === '/') { res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }); return res.end(fs.readFileSync(path.join(__dirname, '../web/index.html'))); }
     if (req.method === 'GET' && req.url === '/api/config') return json(res, 200, config);
+    if (req.method === 'GET' && req.url === '/api/restaurants') return json(res, 200, store.restaurantCatalog());
     if (req.method !== 'POST') return json(res, 404, { error: 'not found' });
     const data = await body(req);
     if (req.url === '/api/crews') return json(res, 201, store.createCrew(data.accountId));
@@ -24,6 +25,9 @@ const server = http.createServer(async (req, res) => {
     if (req.url === '/api/world/vehicle/board') return json(res, 200, store.boardVehicle(data.vehicleId, data.accountId));
     if (req.url === '/api/world/position') return json(res, 200, store.updateWorldPosition(data.accountId, data.destination));
     if (req.url === '/api/world/reconnect-position') return json(res, 200, { destination: store.reconnectPosition(data.accountId) });
+    if (req.url === '/api/restaurants/table/reserve') return json(res, 201, store.reserveRestaurantTable(data.restaurantId, data.tableId, data.crewId, data.seats));
+    if (req.url === '/api/restaurants/orders') return json(res, 201, store.createRestaurantOrder(data));
+    if (req.url === '/api/restaurants/orders/transition') return json(res, 200, store.transitionRestaurantOrder(data.orderId, data.status));
     return json(res, 404, { error: 'not found' });
   } catch (e) { return fail(res, e); }
 });
