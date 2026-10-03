@@ -19,6 +19,7 @@ protected:
     void StopSprint();
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Camera") class USpringArmComponent* CameraBoom;
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Camera") class UCameraComponent* FollowCamera;
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Visual") class UStaticMeshComponent* BodyMesh;
     UPROPERTY(EditDefaultsOnly, Category="Movement") float WalkSpeed = 420.0f;
     UPROPERTY(EditDefaultsOnly, Category="Movement") float SprintSpeed = 700.0f;
 };

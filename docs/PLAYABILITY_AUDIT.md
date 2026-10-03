@@ -1,0 +1,41 @@
+# Playability audit
+
+Audit date: 2026-10-03
+
+The project is a Phase 1 service prototype plus a minimal Unreal C++ module. It is not yet a complete playable casino game. The checks below were run against the local repository, the local HTTP server, the deployed web shell, and an Unreal editor build.
+
+## Verified working
+
+- `backend/` starts on port 8080 and returns a playable destination list, restaurant catalog, and JSON API responses.
+- Crew creation, four-player capacity, invite-only owner crew rules, reservations, session binding, vehicle seat limits, reconnect position, table reservation, order pricing, credit reservation, and order transitions are implemented in `backend/store.js` and covered by five passing Node tests.
+- The local browser shell can create a crew, restore it after a page reload, spawn the four-seat starter van, and submit a travel intent. The destination response now has the same shape locally and on Vercel.
+- Unreal Editor target generation and compilation succeed with Unreal Engine 5.7. The default engine map now receives a runtime greybox floor, three blockout structures, a guaranteed player start, and a visible engine-cube player body.
+- The deployed Vercel API responds to config, restaurant, crew, and vehicle requests when called directly.
+
+## Implemented but not connected to a playable loop
+
+- The HTTP backend is not connected to the Unreal process. A successful API travel or vehicle response does not move or spawn anything in Unreal.
+- `ABHCVehiclePawn` replicates occupants and condition, but has no root mesh, movement component, input bindings, possession transfer, seat transforms, or interaction prompt.
+- `ABHCGameMode::PostLogin` is only an integration comment. There is no production identity/session handoff from the web service or Pixel Streaming into Unreal.
+- The restaurant catalog and order state machine are server-side only. The web UI exposes no table reservation, menu, order, cooking transition, or payout controls.
+- The Vercel function keeps mutable Maps in process memory. A cold start loses crews, vehicles, tables, orders, and credits, so it is not a durable multiplayer authority.
+
+## Missing or blocked
+
+- `unreal/Content` contains no authored assets or maps. `DefaultEngine.ini` still boots `/Engine/Maps/Entry`, so the project has no city, casino interiors, vehicle art, collision layout, NPCs, or authored interaction points.
+- Pixel Streaming configuration, signaling, session authentication, and browser-to-Unreal input routing are absent from the repository.
+- No casino outcome/economy gameplay exists beyond restaurant credit bookkeeping. There are no slot, roulette, blackjack, reward, inventory, or progression systems.
+- No production account provider, TLS termination, persistent database deployment, rate limiting, or authorization middleware is configured.
+
+## Root cause of the unplayable experience
+
+The browser and API prototype were treated as if they were the game client, while the Unreal side only contained movement scaffolding and an empty engine map. The API can prove that backend rules work, but it cannot make the streamed world exist. The greybox bootstrap fixes the empty-map failure and the browser persistence fix removes the immediate crew-spawn failure; a real playable release still requires the missing Unreal world, vehicle implementation, session bridge, and casino interaction systems above.
+
+## Validation evidence
+
+- `npm test` in `backend/`: 5 passed, 0 failed.
+- Unreal build: `BigHeadCasinoEditor Win64 Development`: succeeded.
+- Browser smoke test: create crew -> reload -> restore crew -> spawn crew van: passed locally.
+- Local `/api/config`: 7 top-level destinations and 7 nested world destinations.
+- `unreal/Content`: 0 files.
+- Runtime log: engine Entry map and `BHCGameMode` start successfully; before the greybox bootstrap there was no project-authored world to enter.

@@ -11,7 +11,12 @@ const fail = (res, e) => json(res, /capacity|full/.test(e.message) ? 409 : 400, 
 const server = http.createServer(async (req, res) => {
   try {
     if (req.method === 'GET' && req.url === '/') { res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }); return res.end(fs.readFileSync(path.join(__dirname, '../web/index.html'))); }
-    if (req.method === 'GET' && req.url === '/api/config') return json(res, 200, config);
+    if (req.method === 'GET' && req.url === '/api/config') {
+      // Keep the local server response compatible with the Vercel function.
+      // The browser consumes destinations at the top level, while the source
+      // config keeps world settings grouped under `world`.
+      return json(res, 200, { ...config, destinations: config.world.destinations });
+    }
     if (req.method === 'GET' && req.url === '/api/restaurants') return json(res, 200, store.restaurantCatalog());
     if (req.method !== 'POST') return json(res, 404, { error: 'not found' });
     const data = await body(req);

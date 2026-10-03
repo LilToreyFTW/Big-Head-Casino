@@ -4,6 +4,8 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/Controller.h"
+#include "Components/StaticMeshComponent.h"
+#include "UObject/ConstructorHelpers.h"
 
 ABHCPlayerCharacter::ABHCPlayerCharacter()
 {
@@ -23,6 +25,12 @@ ABHCPlayerCharacter::ABHCPlayerCharacter()
     FollowCamera->bUsePawnControlRotation = false;
     GetCapsuleComponent()->SetCapsuleHalfHeight(110.0f);
     GetCapsuleComponent()->SetCapsuleRadius(55.0f);
+    BodyMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BodyMesh"));
+    BodyMesh->SetupAttachment(GetCapsuleComponent());
+    BodyMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+    BodyMesh->SetRelativeScale3D(FVector(0.55f, 0.55f, 1.0f));
+    static ConstructorHelpers::FObjectFinder<UStaticMesh> BodyAsset(TEXT("/Engine/BasicShapes/Cube.Cube"));
+    if (BodyAsset.Succeeded()) BodyMesh->SetStaticMesh(BodyAsset.Object);
 }
 
 void ABHCPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
