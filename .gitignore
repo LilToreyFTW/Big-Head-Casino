@@ -1,0 +1,8 @@
+backend/data/
+unreal/Binaries/
+unreal/DerivedDataCache/
+unreal/Intermediate/
+unreal/Saved/
+*.sln
+*.suo
+*.log

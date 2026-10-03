@@ -1,0 +1,7 @@
+{
+  "FileVersion": 3,
+  "EngineAssociation": "5.7",
+  "Category": "Games",
+  "Description": "Big Head Casino isolated multiplayer project",
+  "Modules": [{ "Name": "BigHeadCasino", "Type": "Runtime", "LoadingPhase": "Default" }]
+}
