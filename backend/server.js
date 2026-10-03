@@ -15,7 +15,8 @@ const server = http.createServer(async (req, res) => {
     if (req.method !== 'POST') return json(res, 404, { error: 'not found' });
     const data = await body(req);
     if (req.url === '/api/crews') return json(res, 201, store.createCrew(data.accountId));
-    if (req.url === '/api/crews/join') return json(res, 200, store.joinCrew(data.crewId, data.accountId));
+    if (req.url === '/api/crews/join') return json(res, 200, store.joinCrew(data.crewId, data.accountId, data.inviteToken));
+    if (req.url === '/api/crews/invite') return json(res, 200, store.inviteToCrew(data.crewId, data.accountId));
     if (req.url === '/api/reservations') return json(res, 201, store.reserve(data.crewId, data.region || 'us-west'));
     if (req.url === '/api/sessions') return json(res, 201, store.bindSession(data.reservationId, data.accountId));
     if (req.url === '/api/sessions/validate') return json(res, 200, { valid: !!store.authenticate(data.token) });

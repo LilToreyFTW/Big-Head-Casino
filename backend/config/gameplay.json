@@ -2,6 +2,7 @@
   "version": 1,
   "lobby": { "maxPlayers": 100, "maxCrewSize": 4 },
   "streaming": { "protocol": "pixel-streaming-2", "target": "1080p60", "status": "unverified" },
+  "ownerCrew": { "crewId": "crew_4e5c775890ba", "ownerAccountId": "Big Head Developer", "combatImmune": true, "joinPolicy": "invite-only" },
   "dailyTokens": { "amount": 75, "reset": "00:00 UTC" },
   "world": {
     "version": 1,
