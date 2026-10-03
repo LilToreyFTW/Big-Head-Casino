@@ -1,0 +1,13 @@
+.git/
+.vercel/
+.env*
+unreal/
+Art/
+backend/
+docs/
+README.md
+*.blend
+*.blend1
+*.fbx
+*.glb
+*.png

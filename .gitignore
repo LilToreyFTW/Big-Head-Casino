@@ -6,3 +6,6 @@ unreal/Saved/
 *.sln
 *.suo
 *.log
+
+.vercel
+.env*
