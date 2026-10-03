@@ -1,0 +1,40 @@
+{
+  "asset_id": "BHC_ART_BATCH_01_HIGH_END_ATRIUM",
+  "asset_type": "modular_casino_environment",
+  "source_file": "Art/Blender/BHC_HighEndAtrium.blend",
+  "build_script": "Art/Blender/build_high_end_atrium.py",
+  "export_file": "Art/Exports/BHC_HighEndAtrium.glb",
+  "preview_file": "Art/Previews/BHC_HighEndAtrium_Hero.png",
+  "scale": "1 Blender unit = 1 meter",
+  "materials": [
+    "M_BHC_BlackMarble",
+    "M_BHC_BrushedBrass",
+    "M_BHC_AgedBrass",
+    "M_BHC_VelvetBurgundy",
+    "M_BHC_EmeraldFelt",
+    "M_BHC_RedNeon",
+    "M_BHC_PurpleNeon",
+    "M_BHC_Screen"
+  ],
+  "included_modules": [
+    "atrium shell",
+    "central oversized bobble-head centerpiece",
+    "blackjack tables with chips",
+    "slot-machine aisle",
+    "lounge seating",
+    "daily prize wheel stage",
+    "balcony and brass railings",
+    "original Big Head Casino signage",
+    "ceiling rings and chandelier bulbs"
+  ],
+  "collision": "source meshes are suitable for initial import; production collision proxies still need authoring in Unreal",
+  "lods": "not authored yet",
+  "verification": {
+    "blender_version": "5.1.1",
+    "rendered": true,
+    "glb_exported": true,
+    "unreal_imported": false,
+    "unreal_playtest": false
+  },
+  "provenance": "original procedural geometry and branding created for Big Head Casino"
+}
