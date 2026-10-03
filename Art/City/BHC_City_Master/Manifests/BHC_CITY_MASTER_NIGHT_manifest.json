@@ -1,0 +1,14 @@
+{
+  "asset_id": "BHC_CITY_MASTER_NIGHT_01",
+  "source": "Art/City/BHC_City_Master/Blender/BHC_City_Master_Night.blend",
+  "export": "Art/City/BHC_City_Master/Exports/BHC_CITY_MASTER_NIGHT.glb",
+  "preview": "Art/City/BHC_City_Master/Previews/BHC_City_Master_Hero.png",
+  "scope": "Connected central city presentation scene with casino district, hotel, VIP tower, service district, crew garage, bridge, streets, street furniture, lighting, and landmarks",
+  "status": {
+    "blender_rendered": true,
+    "glb_exported": true,
+    "unreal_imported": false,
+    "unreal_streamed": false
+  },
+  "provenance": "original procedural geometry and branding"
+}

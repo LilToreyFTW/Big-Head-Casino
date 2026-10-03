@@ -46,3 +46,6 @@ The browser and API prototype were treated as if they were the game client, whil
 - The atrium has a GLB export and rendered proof image under `Art/Exports/` and `Art/Previews/`, with an asset manifest and handoff document under `Art/Manifests/`.
 - Unreal now enables Nanite, virtual shadow maps, Lumen, virtual textures, temporal upsampling, and a warm/cool/fog lighting baseline in the runtime greybox.
 - The atrium asset has not yet been imported into an authored Unreal map, so the final in-game result still needs Unreal material instances, collision, LOD/Nanite review, and performance profiling.
+- A connected central-city master scene is now authored at `Art/City/BHC_City_Master/`; it covers the casino tower, hotel, VIP tower, equipment and service districts, crew garage, street grid, transit bridge, signage, street furniture, and night lighting.
+- A separate 328 hero vehicle batch is authored at `Art/Vehicles/BHC_VEH_328_NEON_DIESEL/Hero/`; it adds a continuous body shell, widebody aero, glasshouse, lights, interior, four-seat layout, branding, and a GLB export.
+- These batches raise the visual foundation, but they do not claim the full 20x20 streamed city or Unreal drivable/networked vehicle are finished. The existing plan still has 399 undeveloped city tiles, and the Unreal import/integration stages remain.

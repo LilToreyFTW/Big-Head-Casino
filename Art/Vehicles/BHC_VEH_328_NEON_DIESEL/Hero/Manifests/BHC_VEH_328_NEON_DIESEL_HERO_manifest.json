@@ -1,0 +1,26 @@
+{
+  "asset_id": "BHC_VEH_328_NEON_DIESEL_HERO",
+  "source": "Art/Vehicles/BHC_VEH_328_NEON_DIESEL/Hero/Blender/BHC_VEH_328_NEON_DIESEL_HERO.blend",
+  "export": "Art/Vehicles/BHC_VEH_328_NEON_DIESEL/Hero/Exports/BHC_VEH_328_NEON_DIESEL_HERO.glb",
+  "preview": "Art/Vehicles/BHC_VEH_328_NEON_DIESEL/Hero/Previews/BHC_VEH_328_NEON_DIESEL_HERO.png",
+  "dimensions_meters": "5.05 L x 2.06 W x 2.10 max",
+  "seats": 4,
+  "visual_components": [
+    "continuous loft body shell",
+    "widebody fender flares",
+    "carbon splitter/skirt/diffuser",
+    "large rear wing",
+    "modeled cabin",
+    "smoked glass",
+    "LED headlamps and red tail lamps",
+    "intercooler with 328 badge",
+    "four exhaust outlets",
+    "two-line emissive door branding"
+  ],
+  "status": {
+    "blender_rendered": true,
+    "glb_exported": true,
+    "unreal_driven": false,
+    "network_tested": false
+  }
+}
