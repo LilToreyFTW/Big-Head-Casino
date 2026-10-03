@@ -11,7 +11,10 @@
 #include "Components/ExponentialHeightFogComponent.h"
 #include "GameFramework/PlayerStart.h"
 #include "GameFramework/PlayerController.h"
+#include "Camera/CameraActor.h"
 #include "UObject/ConstructorHelpers.h"
+#include "TimerManager.h"
+#include "Kismet/GameplayStatics.h"
 ABHCGameMode::ABHCGameMode() { bUseSeamlessTravel = true; DefaultPawnClass = ABHCPlayerCharacter::StaticClass(); }
 void ABHCGameMode::StartPlay()
 {
@@ -23,7 +26,12 @@ void ABHCGameMode::StartPlay()
         FActorSpawnParameters Params;
         Params.Name = FName(Name);
         AStaticMeshActor* Block = GetWorld()->SpawnActor<AStaticMeshActor>(AStaticMeshActor::StaticClass(), Location, FRotator::ZeroRotator, Params);
-        if (Block) { Block->GetStaticMeshComponent()->SetStaticMesh(Cube); Block->SetActorScale3D(Scale); }
+        if (Block)
+        {
+            Block->GetStaticMeshComponent()->SetMobility(EComponentMobility::Movable);
+            Block->GetStaticMeshComponent()->SetStaticMesh(Cube);
+            Block->SetActorScale3D(Scale);
+        }
     };
     // A deterministic greybox district keeps the project playable even before
     // the authored city map and streamed assets are available.
@@ -34,11 +42,46 @@ void ABHCGameMode::StartPlay()
 
     FActorSpawnParameters LightParams;
     ADirectionalLight* Key = GetWorld()->SpawnActor<ADirectionalLight>(ADirectionalLight::StaticClass(), FVector(0, 0, 700), FRotator(-38, -35, 25), LightParams);
-    if (Key) { Key->GetLightComponent()->SetIntensity(5.0f); Key->GetLightComponent()->SetLightColor(FLinearColor(1.0f, 0.55f, 0.32f)); }
+    if (Key) { Key->GetLightComponent()->SetMobility(EComponentMobility::Movable); Key->GetLightComponent()->SetIntensity(8.0f); Key->GetLightComponent()->SetLightColor(FLinearColor(1.0f, 0.55f, 0.32f)); }
     ASkyLight* Sky = GetWorld()->SpawnActor<ASkyLight>(ASkyLight::StaticClass(), FVector(0, 0, 500), FRotator::ZeroRotator, LightParams);
-    if (Sky) { Sky->GetLightComponent()->SetIntensity(0.35f); Sky->GetLightComponent()->SetLightColor(FLinearColor(0.07f, 0.1f, 0.28f)); }
+    if (Sky) { Sky->GetLightComponent()->SetMobility(EComponentMobility::Movable); Sky->GetLightComponent()->SetIntensity(1.0f); Sky->GetLightComponent()->SetLightColor(FLinearColor(0.15f, 0.2f, 0.5f)); }
     AExponentialHeightFog* Fog = GetWorld()->SpawnActor<AExponentialHeightFog>(AExponentialHeightFog::StaticClass(), FVector(0, 0, 0), FRotator::ZeroRotator, LightParams);
     if (Fog) { Fog->GetComponent()->FogDensity = 0.012f; Fog->GetComponent()->FogHeightFalloff = 0.22f; }
+    FActorSpawnParameters PawnParams;
+    PawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+    ABHCPlayerCharacter* StartupPawn = GetWorld()->SpawnActor<ABHCPlayerCharacter>(ABHCPlayerCharacter::StaticClass(), FVector(0.0f, 0.0f, 180.0f), FRotator::ZeroRotator, PawnParams);
+    if (StartupPawn)
+    {
+        StartupPawn->AutoPossessPlayer = EAutoReceiveInput::Player0;
+        UE_LOG(LogTemp, Display, TEXT("BHC startup pawn spawned at %s"), *StartupPawn->GetActorLocation().ToString());
+    }
+    FActorSpawnParameters CameraParams;
+    ACameraActor* StartupCamera = GetWorld()->SpawnActor<ACameraActor>(ACameraActor::StaticClass(), FVector(0.0f, -900.0f, 450.0f), FRotator(-18.0f, 90.0f, 0.0f), CameraParams);
+    if (StartupCamera)
+    {
+        UE_LOG(LogTemp, Display, TEXT("BHC fallback camera activated"));
+    }
+    GetWorld()->GetTimerManager().SetTimerForNextTick([this]() { EnsurePlayablePawn(); });
+}
+
+void ABHCGameMode::EnsurePlayablePawn()
+{
+    if (!GetWorld()) return;
+    APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+    if (!PlayerController)
+    {
+        UGameplayStatics::CreatePlayer(GetWorld(), 0, true);
+        GetWorld()->GetTimerManager().SetTimerForNextTick([this]() { EnsurePlayablePawn(); });
+        return;
+    }
+    for (TActorIterator<ACameraActor> It(GetWorld()); It; ++It)
+    {
+        PlayerController->SetViewTarget(*It);
+        break;
+    }
+    if (PlayerController->GetPawn()) return;
+    APawn* Pawn = SpawnDefaultPawnAtTransform(PlayerController, FTransform(FRotator::ZeroRotator, FVector(0.0f, 0.0f, 180.0f)));
+    if (Pawn) PlayerController->Possess(Pawn);
 }
 AActor* ABHCGameMode::ChoosePlayerStart_Implementation(AController* Player)
 {

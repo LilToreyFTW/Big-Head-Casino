@@ -13,4 +13,6 @@ public:
     virtual AActor* ChoosePlayerStart_Implementation(AController* Player) override;
     virtual void PostLogin(APlayerController* NewPlayer) override;
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Lobby") int32 MaxPlayers = 100;
+private:
+    void EnsurePlayablePawn();
 };
